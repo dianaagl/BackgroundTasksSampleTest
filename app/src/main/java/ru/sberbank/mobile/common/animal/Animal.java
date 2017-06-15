@@ -1,5 +1,8 @@
 package ru.sberbank.mobile.common.animal;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.common.base.Objects;
 
 import java.io.Serializable;
@@ -7,7 +10,9 @@ import java.io.Serializable;
 /**
  * @author QuickNick
  */
-public class Animal implements Serializable {
+public class Animal implements Parcelable {
+
+    public static final Parcelable.Creator<Animal> CREATOR = new AnimalCreator();
 
     private long mId;
     private String mSpecies;
@@ -54,6 +59,18 @@ public class Animal implements Serializable {
                 .toString();
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        throw new UnsupportedOperationException(
+                "Not implemented yet"
+        );
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public long getId() {
         return mId;
     }
@@ -84,5 +101,20 @@ public class Animal implements Serializable {
 
     public void setName(String name) {
         mName = name;
+    }
+
+    private static class AnimalCreator implements Parcelable.Creator<Animal> {
+
+        @Override
+        public Animal createFromParcel(Parcel source) {
+            throw new UnsupportedOperationException(
+                    "Not implemented yet"
+            );
+        }
+
+        @Override
+        public Animal[] newArray(int size) {
+            return new Animal[size];
+        }
     }
 }

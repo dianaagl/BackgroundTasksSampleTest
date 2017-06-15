@@ -19,6 +19,7 @@ import ru.sberbank.backgroundtaskssample.R;
  */
 public class AnimalsActivity extends AppCompatActivity {
 
+    private static final String TAG = "AnimalsActivity";
     private static final int ANIMALS_LOADER_ID = 1;
 
     private AnimalsStorage mAnimalsStorage;
@@ -27,6 +28,7 @@ public class AnimalsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         AnimalsStorageProvider provider = (AnimalsStorageProvider) getApplication();
         mAnimalsStorage = provider.getAnimalsStorage();
 
