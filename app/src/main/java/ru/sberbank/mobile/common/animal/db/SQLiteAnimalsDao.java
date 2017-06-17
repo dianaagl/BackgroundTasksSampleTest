@@ -22,9 +22,10 @@ public class SQLiteAnimalsDao extends SQLiteOpenHelper
 
     private static final String TAG = "SQLiteAnimals";
 
+
     private static final String NAME = "animals.db";
     private static final long NO_ID = -1;
-    private static final int CURRENT_VERSION = 1;
+    public static final int CURRENT_VERSION = 1;
 
     public static final String TABLE_NAME = "animals";
 
@@ -99,16 +100,45 @@ public class SQLiteAnimalsDao extends SQLiteOpenHelper
 
     @Override
     public int updateAnimal(Animal animal) {
-        throw new UnsupportedOperationException(
-                "Not implemented yet"
-        );
+        int updateNumber = 0;
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            ContentValues animalValues = new ContentValues();
+
+            animalValues.put(AnimalsContract.Animals.NAME, animal.getName());
+            animalValues.put(AnimalsContract.Animals.AGE, animal.getAge());
+            animalValues.put(AnimalsContract.Animals.SPECIES, animal.getSpecies());
+            animalValues.put(AnimalsContract.Animals._ID,animal.getId());
+
+            updateNumber = db.update(TABLE_NAME,
+                    animalValues,
+                    AnimalsContract.Animals._ID +" = ?",
+                    new String[] {String.valueOf(animal.getId())});
+
+            db.setTransactionSuccessful();
+        }
+        finally {
+            db.endTransaction();
+        }
+        return updateNumber;
     }
 
     @Override
     public int deleteAnimal(Animal animal) {
-        throw new UnsupportedOperationException(
-                "Not implemented yet"
-        );
+        int deleteNumber = 0;
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.beginTransaction();
+            deleteNumber = db.delete(TABLE_NAME,
+                    AnimalsContract.Animals._ID + " = ?",
+                    new String[]{String.valueOf(animal.getId())});
+            db.setTransactionSuccessful();
+        }
+        finally {
+            db.endTransaction();
+        }
+        return deleteNumber;
     }
 
     private static Animal createAnimal(Cursor cursor) {
@@ -139,4 +169,5 @@ public class SQLiteAnimalsDao extends SQLiteOpenHelper
     private static int getInt(Cursor cursor, String columnName) {
         return cursor.getInt(cursor.getColumnIndex(columnName));
     }
+
 }

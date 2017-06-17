@@ -1,5 +1,7 @@
 package ru.sberbank.mobile.common.animal;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -11,7 +13,7 @@ public class EntitiesGenerator {
     private static final int SIZE = 10;
     private static final int START_CHAR = (int) 'A';
     private static final int END_CHAR = (int) 'Z';
-    private static final Random RANDOM = new Random();
+    public static final Random RANDOM = new Random();
 
     protected static String createRandomString() {
         StringBuilder sb = new StringBuilder();
@@ -33,5 +35,12 @@ public class EntitiesGenerator {
         animal.setSpecies(createRandomString());
         animal.setAge(Math.abs(RANDOM.nextInt()));
         return animal;
+    }
+    public static List<Animal> createRandomAnimalsList(){
+        List<Animal> animals = new ArrayList<>();
+        for(int i = 0;i < Math.abs(RANDOM.nextInt());i++){
+            animals.add(createRandomAnimal(true));
+        }
+        return animals;
     }
 }
